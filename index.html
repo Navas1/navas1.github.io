@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edilson Navas — Serial Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e0e0e;
+      --surface: #161616;
+      --border: #252525;
+      --text: #e8e2d9;
+      --muted: #6b6560;
+      --accent: #c9a84c;
+      --accent2: #e05c3a;
+      --white: #f5f0e8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* GRAIN OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* HEADER */
+    header {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 2rem 3rem;
+      max-width: 760px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.25rem 0.75rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--muted);
+      font-weight: 300;
+      letter-spacing: 0.03em;
+    }
+
+    /* SVG ILLUSTRATION */
+    .illustration {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3rem 2rem 2rem;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .illustration svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ARTICLE */
+    article {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2rem 2rem 4rem;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .article-meta span {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .article-meta .dot {
+      width: 3px;
+      height: 3px;
+      background: var(--muted);
+      border-radius: 50%;
+    }
+
+    h2.article-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 2rem;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--accent);
+      margin: 2.5rem 0 1rem;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--text);
+      font-weight: 300;
+      margin-bottom: 1.2rem;
+    }
+
+    p strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    blockquote {
+      border-left: 2px solid var(--accent2);
+      padding: 0.75rem 1.25rem;
+      margin: 2rem 0;
+      background: rgba(224,92,58,0.05);
+      border-radius: 0 4px 4px 0;
+    }
+
+    blockquote p {
+      font-style: italic;
+      color: var(--white);
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    /* PROJECTS */
+    .projects {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+
+    .projects-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+
+    .project-card {
+      display: block;
+      text-decoration: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .project-card .project-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .project-card .project-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    .project-card .project-arrow {
+      display: inline-block;
+      color: var(--accent);
+      font-size: 0.8rem;
+      margin-top: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* FOOTER */
+    footer {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer span {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    footer a {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--accent); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="tag">Serial Builder · São Paulo</div>
+    <h1>Edilson Navas</h1>
+    <p class="subtitle">Jornalista, publicitário e empreendedor. Ideias que viram projetos. Projetos que viram negócios.</p>
+  </header>
+
+  <!-- SVG ILLUSTRATION -->
+  <div class="illustration">
+    <svg viewBox="0 0 760 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Ilustração conceitual sobre aprisionamento tecnológico">
+      <!-- Background subtle grid -->
+      <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#252525" stroke-width="0.5"/>
+        </pattern>
+        <linearGradient id="chainGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#e05c3a" stop-opacity="0.8"/>
+        </linearGradient>
+        <linearGradient id="fadeLeft" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#0e0e0e"/>
+          <stop offset="30%" stop-color="#0e0e0e" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="fadeRight" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="70%" stop-color="#0e0e0e" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#0e0e0e"/>
+        </linearGradient>
+      </defs>
+
+      <rect width="760" height="180" fill="url(#grid)"/>
+
+      <!-- Chain links -->
+      <g opacity="0.6">
+        <!-- Link 1 -->
+        <ellipse cx="120" cy="90" rx="28" ry="14" stroke="url(#chainGrad)" stroke-width="5" fill="none"/>
+        <ellipse cx="120" cy="90" rx="28" ry="14" stroke="url(#chainGrad)" stroke-width="5" fill="none" transform="rotate(90 120 90)"/>
+        <!-- Link 2 -->
+        <ellipse cx="190" cy="90" rx="28" ry="14" stroke="url(#chainGrad)" stroke-width="5" fill="none"/>
+        <ellipse cx="190" cy="90" rx="28" ry="14" stroke="url(#chainGrad)" stroke-width="5" fill="none" transform="rotate(90 190 90)"/>
+        <!-- Link 3 -->
+        <ellipse cx="260" cy="90" rx="28" ry="14" stroke="url(#chainGrad)" stroke-width="5" fill="none"/>
+        <ellipse cx="260" cy="90" rx="28" ry="14" stroke="url(#chainGrad)" stroke-width="5" fill="none" transform="rotate(90 260 90)"/>
+      </g>
+
+      <!-- Central lock -->
+      <g transform="translate(340, 50)">
+        <!-- Lock body -->
+        <rect x="20" y="38" width="60" height="50" rx="6" fill="#1a1a1a" stroke="#c9a84c" stroke-width="2"/>
+        <!-- Lock shackle -->
+        <path d="M 32 38 L 32 22 Q 50 6 68 22 L 68 38" fill="none" stroke="#c9a84c" stroke-width="4" stroke-linecap="round"/>
+        <!-- Keyhole -->
+        <circle cx="50" cy="60" r="7" fill="#c9a84c" opacity="0.9"/>
+        <rect x="46" y="65" width="8" height="12" rx="2" fill="#c9a84c" opacity="0.9"/>
+        <!-- Glow -->
+        <circle cx="50" cy="63" r="20" fill="#c9a84c" opacity="0.05"/>
+      </g>
+
+      <!-- Chain right side -->
+      <g opacity="0.6">
+        <ellipse cx="500" cy="90" rx="28" ry="14" stroke="url(#chainGrad)" stroke-width="5" fill="none"/>
+        <ellipse cx="500" cy="90" rx="28" ry="14" stroke="url(#chainGrad)" stroke-width="5" fill="none" transform="rotate(90 500 90)"/>
+        <ellipse cx="570" cy="90" rx="28" ry="14" stroke="url(#chainGrad)" stroke-width="5" fill="none"/>
+        <ellipse cx="570" cy="90" rx="28" ry="14" stroke="url(#chainGrad)" stroke-width="5" fill="none" transform="rotate(90 570 90)"/>
+        <ellipse cx="640" cy="90" rx="28" ry="14" stroke="url(#chainGrad)" stroke-width="5" fill="none"/>
+        <ellipse cx="640" cy="90" rx="28" ry="14" stroke="url(#chainGrad)" stroke-width="5" fill="none" transform="rotate(90 640 90)"/>
+      </g>
+
+      <!-- Fade edges -->
+      <rect width="760" height="180" fill="url(#fadeLeft)"/>
+      <rect width="760" height="180" fill="url(#fadeRight)"/>
+
+      <!-- Label -->
+      <text x="380" y="160" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="10" fill="#6b6560" letter-spacing="3">LOCK-IN TECNOLÓGICO</text>
+    </svg>
+  </div>
+
+  <!-- ARTICLE -->
+  <article>
+    <div class="article-meta">
+      <span>Maio 2026</span>
+      <div class="dot"></div>
+      <span>Tecnologia &amp; Negócios</span>
+      <div class="dot"></div>
+      <span>Leitura: 4 min</span>
+    </div>
+
+    <h2 class="article-title">O Pacote que Aprisiona</h2>
+
+    <p>Existe um movimento silencioso que acontece dentro de médias e grandes empresas toda vez que o departamento de TI senta com o financeiro para "otimizar custos". O raciocínio parece impecável: em vez de contratar dez ferramentas diferentes, fechar um único pacote corporativo com uma big tech. Um fornecedor, uma fatura, um contrato. Simples, certo?</p>
+
+    <blockquote><p>Errado. O que parece economia vira dependência. E dependência, com o tempo, vira armadilha.</p></blockquote>
+
+    <h3>A ilusão do pacote fechado</h3>
+
+    <p>O exemplo mais didático é o da Microsoft. Durante anos, o pacote Microsoft 365 vinha com o Teams embutido, sem opção de recusa. Não era escolha, era imposição disfarçada de conveniência. A situação ficou tão absurda que a Comissão Europeia abriu investigação formal em 2023 por práticas anticoncorrenciais, pressionada por concorrentes como o Slack. Em setembro de 2025, a Microsoft foi legalmente obrigada a separar o Teams do Office na União Europeia, após a Comissão concluir que a empresa havia concedido uma vantagem anticoncorrencial ao integrar o serviço obrigatoriamente no pacote. Durante anos, empresas do mundo inteiro pagaram por uma ferramenta de comunicação que não escolheram e que talvez nem fossem usar se tivessem alternativa real.</p>
+
+    <h3>Quando a IA virou o novo campo de batalha</h3>
+
+    <p>O capítulo mais revelador desta história, porém, está acontecendo agora, em 2026, no mercado de inteligência artificial para desenvolvedores. O GitHub Copilot, a aposta da Microsoft na IA para programação, era quase um monopólio em 2024. Hoje está em queda livre. A participação do Copilot entre desenvolvedores profissionais caiu de 67% para 51% em menos de um ano, enquanto o Cursor estreou com 18% de adoção e o Claude Code chegou a 10% logo em sua primeira aparição em pesquisas do setor. Mais revelador ainda: quando perguntados sobre preferência entre Copilot, ChatGPT e Gemini, apenas 8% dos desenvolvedores escolhem o Copilot.</p>
+
+    <p>Por quê? Porque ferramentas melhores apareceram, e desta vez o mercado foi rápido em reconhecê-las. O Claude Code da Anthropic capturou 42% das cargas de trabalho de codificação empresarial, em parte porque performa melhor justamente nos problemas que mais importam para engenheiros sênior. O Cursor, uma IDE construída do zero para o paradigma de IA, cresceu 100 vezes em receita empresarial em 2025. Não foi marketing. Foi performance.</p>
+
+    <h3>O custo oculto da comodidade</h3>
+
+    <p>O padrão se repete em outros segmentos. Empresas que adotaram o pacote Microsoft por comodidade ficaram com o Copilot como ferramenta de IA padrão: não porque é a melhor, mas porque já estava inclusa na fatura que ninguém questionou. O status de "opção padrão Microsoft" que impulsionou a dominância inicial do Copilot tornou-se hoje seu teto de crescimento. Onde decisões de compra favorecem a Microsoft, o Copilot vence. Em qualquer outro lugar, está perdendo espaço para concorrentes especializados.</p>
+
+    <h3>O que isso tem a ver comigo</h3>
+
+    <p>Esse cenário tem me influenciado diretamente nas escolhas que faço nos projetos em que trabalho. No 11Stay, uma plataforma de hospitalidade urbana que estou estruturando em São Paulo, a decisão foi clara desde o início: nenhuma dependência de infraestrutura proprietária de grande fornecedor. Stack aberta, pagamentos via Pix com liquidação alternativa, automações via Evolution API. No ZapMarket, um mercado de previsões que estamos desenhando sobre WhatsApp, a mesma lógica: construir sobre protocolo aberto, não sobre plataforma fechada que pode mudar as regras do jogo amanhã. E no Revisor24h.pro, um SaaS de revisão textual com IA, a premissa é justamente essa: oferecer uma ferramenta especializada e superior para quem hoje usa o "revisor genérico" que veio no pacote do provedor de email corporativo.</p>
+
+    <p>Nenhum desses projetos está em operação ainda. Mas a filosofia que os orienta já está clara: especialização vence conveniência, e stack aberta vence lock-in, especialmente quando o mercado finalmente para de aceitar mediocridade embalada em desconto.</p>
+
+    <h3>A conta que ninguém faz</h3>
+
+    <p>A lição não é sobre a Microsoft especificamente. É sobre o custo oculto de terceirizar decisões tecnológicas para a comodidade de um pacote. Cada ferramenta mediana que entra pela porta do contrato corporativo empurra para fora uma ferramenta excelente que poderia estar transformando o trabalho de verdade. E quando o mercado acorda, o custo de mudar é alto, a produtividade perdida não volta, e o concorrente que escolheu melhor já foi embora na frente.</p>
+
+    <blockquote><p>Conveniência tem preço. Às vezes, ele vem embutido na fatura mensal que ninguém questiona.</p></blockquote>
+
+  </article>
+
+  <!-- PROJECTS -->
+  <div class="projects">
+    <p class="projects-label">Projetos em desenvolvimento</p>
+    <div class="projects-grid">
+      <a href="https://11stay.netlify.app" target="_blank" rel="noopener" class="project-card">
+        <div class="project-name">11Stay</div>
+        <div class="project-desc">Hub paulistano de hospitalidade. OTA independente com stack aberta.</div>
+        <div class="project-arrow">Conhecer →</div>
+      </a>
+      <a href="https://revisor24h.pro" target="_blank" rel="noopener" class="project-card">
+        <div class="project-name">Revisor24h.pro</div>
+        <div class="project-desc">SaaS de revisão textual com IA. Para quem leva a escrita a sério.</div>
+        <div class="project-arrow">Conhecer →</div>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Edilson Navas</span>
+    <a href="https://linkedin.com/in/edilsonnavas" target="_blank" rel="noopener">LinkedIn</a>
+  </footer>
+
+</body>
+</html>
